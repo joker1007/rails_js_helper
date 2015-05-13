@@ -9,14 +9,14 @@
 
   config: <%= RailsJsHelper.config_table.to_json %>
 
-  image_path: (path) ->
+  imagePath: (path) ->
     RailsHelper.image_path_table[path]
 
-  asset_path: (path) ->
+  assetPath: (path) ->
     RailsHelper.asset_path_table[path]
 
-  image_tag: (path, attributes = {}) ->
-    src = RailsHelper.image_path(path)
+  imageTag: (path, attributes = {}) ->
+    src = RailsHelper.imagePath(path)
     unless src
       throw new Error("Asset path is nothing on table")
     attrs = []
@@ -24,7 +24,28 @@
       attrs.push("#{k}=\"#{v}\"")
     "<img src=\"#{src}\" #{attrs.join(" ")}>"
 
-  named_route: (name, options = {}) ->
+  pathFor: (name, options = {}) ->
+    uri = RailsHelper._makeURI(name, options)
+    uri.toString()
+
+  urlFor: (name, options = {}) ->
+    protocol = "http"
+    host = location.host
+
+    if options.protocol
+      protocol = options.protocol
+      delete options.protocol
+
+    if options.host
+      host = options.host
+      delete options.host
+
+    uri = RailsHelper._makeURI(name, options)
+    uri.host(host)
+    uri.protocol(protocol)
+    uri.toString()
+
+  _makeURI: (name, options = {}) ->
     base = RailsHelper.named_route_table[name]
     unless base
       throw new Error("Routing is nothing on table")
@@ -32,12 +53,11 @@
     uri.suffix(options.format) if options.format?
     delete options.format
     uri.query(options)
-    uri.toString()
+    uri
 
-  route_names: ->
+  routeNames: ->
     names = []
     for name, _url of RailsHelper.named_route_table
-      console.log(name)
       names.push(name)
     names
 }
