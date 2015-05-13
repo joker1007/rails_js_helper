@@ -10,6 +10,9 @@ RSpec.feature "RailsHelper", js: true do
     expect(page.evaluate_script "RailsHelper.named_route('users', {'format': 'json'})")
       .to eq "/users.json"
 
+    expect(page.evaluate_script "RailsHelper.route_names()")
+      .to match_array ["users", "new_user"]
+
     expect(page.evaluate_script "RailsHelper.asset_path('scaffold.css')")
       .to eq "/assets/scaffold.css"
 

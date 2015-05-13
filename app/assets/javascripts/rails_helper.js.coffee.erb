@@ -33,4 +33,11 @@
     delete options.format
     uri.query(options)
     uri.toString()
+
+  route_names: ->
+    names = []
+    for name, _url of RailsHelper.named_route_table
+      console.log(name)
+      names.push(name)
+    names
 }

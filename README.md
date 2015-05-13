@@ -1,8 +1,25 @@
 # RailsJsHelper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rails_js_helper`. To experiment with that code, run `bin/console` for an interactive prompt.
+this gem define `RailsHelper` on JS.
+this gem embeds `image_path`, `asset_path` and routing table on compile timing on `rails_helper.js.coffee.erb.`
 
-TODO: Delete this and the text above, and describe your gem
+`RailsHelper` has some functions.
+
+
+## Limitation
+this gem can use only no segments named routes.
+
+ex.
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  resources :users
+  end
+end
+```
+
+can use only `users`, `new_user`.
 
 ## Installation
 
@@ -12,17 +29,34 @@ Add this line to your application's Gemfile:
 gem 'rails_js_helper'
 ```
 
+*Caution* this gem requires `rails-assets-URIjs`.
+
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install rails_js_helper
-
 ## Usage
 
-TODO: Write usage instructions here
+Write `config/initializers/rails_js_helper.rb`.
+
+```ruby
+RailsJsHelper.configure do |c|
+  # Set use image paths and asset paths
+  c.images += %w(loading.png)
+  c.assets += %w(loading.css)
+end
+```
+
+```coffee
+#= require rails_helper
+
+RailsHelper.image_path("loading.png") # => "/assets/loading.png"
+RailsHelper.image_tag("loading.png", width: 120) # => <img src="loading.png" width="120">
+RailsHelper.asset_path("users.css") # => /assets/users.css
+RailsHelper.named_route("users", format: "json", foo: "bar") # => "/users.json?foo=bar"
+RailsHelper.named_route("new_users") # => "/users/new"
+RailsHelper.route_names() # show all route names on javascript
+```
 
 ## Development
 
@@ -32,7 +66,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/rails_js_helper/fork )
+1. Fork it ( https://github.com/joker1007/rails_js_helper/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
