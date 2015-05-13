@@ -11,6 +11,12 @@ RSpec.feature "RailsHelper", js: true do
       .to eq "/users.json"
 
     expect(page.evaluate_script "RailsHelper.asset_path('scaffold.css')")
-      .to eq "/users"
+      .to eq "/assets/scaffold.css"
+
+    expect(page.evaluate_script "RailsHelper.image_path('dummy.png')")
+      .to eq "/assets/dummy.png"
+
+    expect(page.evaluate_script "RailsHelper.image_tag('dummy.png', {'width': '120'})")
+      .to eq "<img src=\"/assets/dummy.png\" width=\"120\">"
   end
 end
