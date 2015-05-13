@@ -1,0 +1,36 @@
+#= require URIjs/URI.js
+
+@RailsHelper = {
+  image_path_table: <%= RailsJsHelper.image_path_table.to_json %>
+
+  asset_path_table: <%= RailsJsHelper.asset_path_table.to_json %>
+
+  named_route_table: <%= RailsJsHelper.named_route_table.to_json %>
+
+  config: <%= RailsJsHelper.config_table.to_json %>
+
+  image_path: (path) ->
+    RailsHelper.image_path_table[path]
+
+  asset_path: (path) ->
+    RailsHelper.asset_path_table[path]
+
+  image_tag: (path, attributes = {}) ->
+    src = RailsHelper.image_path(path)
+    unless src
+      throw new Error("Asset path is nothing on table")
+    attrs = []
+    for k, v of attributes
+      attrs.push("#{k}=\"#{v}\"")
+    "<img src=\"#{src}\" #{attrs.join(" ")}>"
+
+  named_route: (name, options = {}) ->
+    base = RailsHelper.named_route_table[name]
+    unless base
+      throw new Error("Routing is nothing on table")
+    uri = new URI(base)
+    uri.suffix(options.format) if options.format?
+    delete options.format
+    uri.query(options)
+    uri.toString()
+}
