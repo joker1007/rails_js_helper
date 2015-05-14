@@ -1,4 +1,5 @@
 # RailsJsHelper
+[![Build Status](https://travis-ci.org/joker1007/rails_js_helper.svg)](https://travis-ci.org/joker1007/rails_js_helper)
 
 this gem define `RailsHelper` on JS.
 this gem embeds `image_path`, `asset_path` and routing table on compile timing on `rails_helper.js.coffee.erb.`
