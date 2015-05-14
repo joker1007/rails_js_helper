@@ -56,14 +56,22 @@ configs:
 ```coffee
 #= require rails_helper
 
-RailsHelper.image_path("loading.png") # => "/assets/loading.png"
-RailsHelper.image_tag("loading.png", width: 120) # => <img src="loading.png" width="120">
-RailsHelper.asset_path("users.css") # => /assets/users.css
-RailsHelper.named_route("users", format: "json", foo: "bar") # => "/users.json?foo=bar"
-RailsHelper.named_route("new_users") # => "/users/new"
-RailsHelper.route_names() # show all route names on javascript
+RailsHelper.imagePath("loading.png") # => "/assets/loading.png"
+RailsHelper.imageTag("loading.png", width: 120) # => <img src="loading.png" width="120">
+RailsHelper.assetPath("users.css") # => /assets/users.css
+RailsHelper.pathFor("users", format: "json", foo: "bar") # => "/users.json?foo=bar"
+RailsHelper.pathFor("new_users") # => "/users/new"
+RailsHelper.routeNames() # show all route names on javascript
 RailsHelper.config.google_api_key # => value of `Rails.application.config.x.google_api_key`
 ```
+
+## Functions
+
+### RailsHelper.imagePath(path)
+### RailsHelper.imageTag(path, attributes={})
+### RailsHelper.pathFor(routeName, query={})
+### RailsHelper.routeNames()
+### RailsHelper.config
 
 ## Development
 
