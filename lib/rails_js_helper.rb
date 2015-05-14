@@ -37,7 +37,7 @@ module RailsJsHelper
 
     def load_config
       if config_file.exist?
-        YAML.load(ERB.new(Rails.root.join("config", "rails_js_helper.yml").read).result)
+        YAML.load(ERB.new(config_file.read).result)
       else
         {}
       end
