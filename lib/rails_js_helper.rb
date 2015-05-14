@@ -3,25 +3,20 @@ require "rails_js_helper/version"
 require 'active_support/configurable'
 
 module RailsJsHelper
-  include ActiveSupport::Configurable
-
-  config.images = []
-  config.assets = []
-
-  config.configs = {}
-
   class << self
     def image_path_table
+      images = load_config["images"].to_a
       Hash[
-        config.images.map do |path|
+        images.map do |path|
           [path, ActionController::Base.helpers.image_path(path)]
         end
       ]
     end
 
     def asset_path_table
+      assets = load_config["assets"].to_a
       Hash[
-        config.assets.map do |path|
+        assets.map do |path|
           [path, ActionController::Base.helpers.image_path(path)]
         end
       ]
@@ -35,7 +30,21 @@ module RailsJsHelper
     end
 
     def config_table
-      config.configs
+      load_config["configs"] || {}
+    end
+
+    private
+
+    def load_config
+      if config_file.exist?
+        YAML.load_file(Rails.root.join("config", "rails_js_helper.yml"))
+      else
+        {}
+      end
+    end
+
+    def config_file
+      Rails.root.join("config", "rails_js_helper.yml")
     end
   end
 end

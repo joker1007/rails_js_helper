@@ -1,11 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'rails_js_helper'
 
-RailsJsHelper.configure do |c|
-  c.images +=  %w(dummy.png)
-  c.assets += %w(scaffold.css)
-end
-
 require 'dummy_rails_helper'
 require 'rspec/rails'
 
