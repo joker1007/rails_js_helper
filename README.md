@@ -38,14 +38,19 @@ And then execute:
 
 ## Usage
 
-Write `config/initializers/rails_js_helper.rb`.
+```sh
+$ bundle exec rails g rails_js_helper:config
 
-```ruby
-RailsJsHelper.configure do |c|
-  # Set use image paths and asset paths
-  c.images += %w(loading.png)
-  c.assets += %w(loading.css)
-end
+# And edit config/rails_js_helper.yml
+```
+
+```yml
+images
+  - loading.png
+assets:
+  - loading.css
+configs:
+  google_api_key: <%= Rails.application.config.x.google_api_key %>
 ```
 
 ```coffee
@@ -57,6 +62,7 @@ RailsHelper.asset_path("users.css") # => /assets/users.css
 RailsHelper.named_route("users", format: "json", foo: "bar") # => "/users.json?foo=bar"
 RailsHelper.named_route("new_users") # => "/users/new"
 RailsHelper.route_names() # show all route names on javascript
+RailsHelper.config.google_api_key # => value of `Rails.application.config.x.google_api_key`
 ```
 
 ## Development
