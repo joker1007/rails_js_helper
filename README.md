@@ -45,7 +45,7 @@ $ bundle exec rails g rails_js_helper:config
 ```
 
 ```yml
-images
+images:
   - loading.png
 assets:
   - loading.css
